@@ -1,36 +1,75 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
-import TabsPage from "../views/TabsPage.vue";
+import GuestTabs from "../views/guest/GuestTabs.vue";
+import TabsPage from "../views/guest/GuestTabs.vue";
+import UserTabs from "../views/user/UserTabs.vue"
+import GameTabs from "../views/game/GameTabs.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/tabs/tab1",
+    redirect: "/guest/welcome",
   },
   {
-    path: "/tabs/",
-    component: TabsPage,
+    path: "/guest/",
+    component: GuestTabs,
     children: [
       {
         path: "",
-        redirect: "/tabs/tab1",
+        redirect: "/guest/welcome",
       },
       {
-        path: "tab1",
+        path: "welcome",
         component: () => import("@/views/Tab1Page.vue"),
       },
       {
-        path: "tab2",
-        component: () => import("@/views/Tab2Page.vue"),
+        path: "login",
+        component: () => import("@/views/guest/GuestLogin.vue"),
       },
       {
-        path: "tab3",
-        component: () => import("@/views/Tab3Page.vue"),
+        path: "register",
+        component: () => import("@/views/guest/GuestRegister.vue"),
       },
       {
         path: "tab4",
-        component: () => import("@/views/UploadProof.vue"),
+        component: () => import("@/views/guest/UploadProfilePhoto.vue"),
       },
+    ],
+  },
+  {
+    path: "/user/",
+    component: UserTabs,
+    children: [
+      {
+        path: "",
+        redirect: "/user/home",
+      },
+      {
+        path: "home",
+        component: () => import("@/views/user/UserHome.vue"),
+      }
+    ],
+  },
+  {
+    path: "/game/",
+    component: GameTabs,
+    children: [
+      {
+        path: "",
+        redirect: "/game/home",
+      },
+      {
+        path: "home",
+        component: () => import("@/views/game/GameTypeSelector.vue"),
+      },
+      {
+        path: "dom/dare",
+        component: () => import("@/views/game/dom/DomDare.vue"),
+      },
+      {
+        path: "dom/finish",
+        component: () => import("@/views/game/dom/DomFinish.vue"),
+      }
     ],
   },
   {
@@ -43,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "proof",
-        component: () => import("@/views/UploadProof.vue"),
+        component: () => import("@/views/guest/UploadProfilePhoto.vue"),
       },
     ],
   },
