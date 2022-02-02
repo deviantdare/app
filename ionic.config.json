@@ -1,0 +1,7 @@
+{
+  "name": "DEVIANT DARE",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
