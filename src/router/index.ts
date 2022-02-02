@@ -63,6 +63,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/game/GameTypeSelector.vue"),
       },
       {
+        path: "dare/:id",
+        component: () => import("@/views/game/DareView.vue"),
+      },
+      {
         path: "dom/dare",
         component: () => import("@/views/game/dom/DomDare.vue"),
       },
