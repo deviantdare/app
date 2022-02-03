@@ -7,62 +7,58 @@
     </ion-header>
     <ion-content :fullscreen="true">
       <div id="container">
-      <ion-grid fixed>
-        <p align="center">There's a right game for everyone out there</p>
-        <ion-card>
-                        <ion-item>
-          <ion-card-content>
-            <ion-row>
-              <ion-item router-link="/game/sub/difficulty">
-                <ion-card-header>
-                  <ion-card-title align="center" color="primary"
-                    >OFFER YOUR SUBMISSION</ion-card-title
-                  >
-                  <ion-card-content
-                    ><p>
-                      Set your limits and difficulty, then expolore a private
-                      moment of submission with a friend or a stranger. The
-                      picture of your submissive dare is seen only by them.
-                    </p></ion-card-content
-                  >
-                </ion-card-header>
-              </ion-item>
-            </ion-row>
-            <ion-row>
-              <ion-item router-link="/game/dom/dare">
-                <ion-card-header>
-                  <ion-card-title align="center" color="primary"
-                    >DEMAND AND DOMINATE</ion-card-title
-                  >
-                  <ion-card-content
-                    ><p>
-                      Describe your dominant fatasy, then share a link with
-                      friends or strangers and find out who is willing to
-                      perform your demand before they even know what it is.
-                    </p>
-                  </ion-card-content>
-                </ion-card-header>
-              </ion-item>
-            </ion-row>
-            <ion-row>
-              <ion-item router-link="/game/switch/difficulty">
-                <ion-card-header>
-                  <ion-card-title align="center" color="primary"
-                    >COMPETE WITH A SWITCH</ion-card-title
-                  >
-                  <ion-card-content
-                    ><p>
-                      Do you switch between dominanace and submission? Start a
-                      switch game with one other friend or stranger and you both
-                      get to try and dominate each other.
-                    </p></ion-card-content
-                  >
-                </ion-card-header>
-              </ion-item>
-            </ion-row>
-          </ion-card-content></ion-item></ion-card
-        ></ion-grid
-      ></div></ion-content
+        <ion-grid fixed>
+          <p align="center">There's a right game for everyone out there</p>
+          <ion-row router-link="/game/sub/difficulty">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title align="center" color="primary"
+                  >OFFER YOUR SUBMISSION</ion-card-title
+                >
+                <ion-card-content
+                  ><p>
+                    Set your limits and difficulty, then expolore a private
+                    moment of submission with a friend or a stranger. The
+                    picture of your submissive dare is seen only by them.
+                  </p></ion-card-content
+                >
+              </ion-card-header>
+            </ion-card>
+          </ion-row>
+          <ion-row router-link="/game/dom/dare">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title align="center" color="primary"
+                  >DEMAND AND DOMINATE</ion-card-title
+                >
+                <ion-card-content
+                  ><p>
+                    Describe your dominant fatasy, then share a link with
+                    friends or strangers and find out who is willing to perform
+                    your demand before they even know what it is.
+                  </p>
+                </ion-card-content>
+              </ion-card-header>
+            </ion-card>
+          </ion-row>
+          <ion-row router-link="/game/switch/difficulty">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title align="center" color="primary"
+                  >COMPETE WITH A SWITCH</ion-card-title
+                >
+                <ion-card-content
+                  ><p>
+                    Do you switch between dominanace and submission? Start a
+                    switch game with one other friend or stranger and you both
+                    get to try and dominate each other.
+                  </p></ion-card-content
+                >
+              </ion-card-header>
+            </ion-card>
+          </ion-row>
+        </ion-grid>
+      </div></ion-content
     ></ion-page
   >
 </template>
@@ -72,11 +68,9 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonItem,
   IonPage,
   IonContent,
   IonGrid,
-  IonCard,
   IonRow,
   IonHeader,
   IonToolbar,
@@ -94,11 +88,9 @@ export default defineComponent({
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    IonItem,
     IonPage,
     IonContent,
     IonGrid,
-    IonCard,
     IonRow,
     IonHeader,
     IonToolbar,

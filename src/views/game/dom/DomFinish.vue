@@ -16,18 +16,15 @@
 
  <script>
 import { useRouter } from "vue-router";
-import {
-  IonButton,
-  IonPage
-} from "@ionic/vue";
+import { IonButton, IonPage } from "@ionic/vue";
 export default {
   name: "ExploreContainer",
   props: {
     name: String,
   },
-    components: {
+  components: {
     IonButton,
-    IonPage
+    IonPage,
   },
   setup() {
     const router = useRouter();

@@ -30,13 +30,13 @@
           </ion-card>
           <ion-card>
             <ion-card-header>
-              <ion-button expand="full" @click="showDare()">Refresh</ion-button>
-              <ion-card-subtitle>Here all your dares</ion-card-subtitle>
+              <ion-card-subtitle>Here is your dare</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
               <ion-item>
                 <ion-label>{{ dare }}</ion-label>
               </ion-item>
+                            <ion-button expand="full" @click="showDareData()">Refresh</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-grid>
@@ -85,19 +85,19 @@ export default {
     ...mapGetters("auth", {
       authData: "getAuthData",
     }),
-    ...mapGetters("dare", {
-      dare: "getDare",
+    ...mapGetters("daredata", {
+      dare: "getDareData",
     }),
   },
   created() {
-    this.showDare();
+    this.showDareData();
   },
   methods: {
-    ...mapActions("dare", {
-      fetchDare: "fetchDare",
+    ...mapActions("daredata", {
+      fetchDareData: "fetchDareData",
     }),
-    async showDare() {
-      await this.fetchDare(this.$route.params.id);
+    async showDareData() {
+      await this.fetchDareData(this.$route.params.id);
     },
   },
 };

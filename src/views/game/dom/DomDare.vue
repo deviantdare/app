@@ -18,71 +18,67 @@
         <ion-row class="ion-justify-content-center">
           <ion-col>
             <ion-card>
-              <ion-item>
+              
                 <ion-card-header>
                   <ion-card-subtitle>Dare Description</ion-card-subtitle>
-                  <ion-card-content
-                    ><ion-textarea></ion-textarea>
-                  </ion-card-content>
                 </ion-card-header>
-              </ion-item>
+                <ion-card-content
+                  ><ion-item><ion-textarea></ion-textarea></ion-item>
+                </ion-card-content>
+              
             </ion-card>
           </ion-col>
         </ion-row>
         <ion-row class="ion-justify-content-center">
           <ion-col>
             <ion-card>
-              <ion-item>
-                <ion-card-header>
-                  <ion-card-subtitle>Select dare difficulty</ion-card-subtitle>
-                  <ion-card-content>
-                    <ion-list>
-                      <ion-radio-group>
-                        <ion-item>
-                          <ion-label>Titillating</ion-label>
-                          <ion-label class="ion-text-wrap">
-                            You might have to show some skin, but it wont
-                            involve full nudity or sexual acts.
-                          </ion-label>
-                          <ion-radio slot="start" value="1"></ion-radio>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label>Arousing</ion-label>
-                          <ion-label class="ion-text-wrap">
-                            Showing off your body is fair game here, but no
-                            sexual acts.
-                          </ion-label>
-                          <ion-radio slot="start" value="2"></ion-radio>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label>Explicit</ion-label>
-                          <ion-label class="ion-text-wrap">
-                            Acts could contain full nudity and sexual acts.
-                            Nothing too gross or painful though.
-                          </ion-label>
-                          <ion-radio slot="start" value="3"></ion-radio>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label>Edgy</ion-label>
-                          <ion-label class="ion-text-wrap">
-                            Pushing soft boundaries is ok. There's no telling
-                            what this act will involve, but you can manage.
-                          </ion-label>
-                          <ion-radio slot="start" value="4"></ion-radio>
-                        </ion-item>
-                        <ion-item>
-                          <ion-label>Hardcore</ion-label>
-                          <ion-label class="ion-text-wrap">
-                            No holds barred. Use this with people you trust to
-                            safely approach your limits.
-                          </ion-label>
-                          <ion-radio slot="start" value="5"></ion-radio>
-                        </ion-item>
-                      </ion-radio-group>
-                    </ion-list>
-                  </ion-card-content>
-                </ion-card-header>
-              </ion-item>
+              <ion-card-header>
+                <ion-card-subtitle>Select dare difficulty</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-radio-group>
+                  <ion-item>
+                    <ion-label>Titillating</ion-label>
+                    <ion-label class="ion-text-wrap">
+                      You might have to show some skin, but it wont involve full
+                      nudity or sexual acts.
+                    </ion-label>
+                    <ion-radio slot="start" value="1"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Arousing</ion-label>
+                    <ion-label class="ion-text-wrap">
+                      Showing off your body is fair game here, but no sexual
+                      acts.
+                    </ion-label>
+                    <ion-radio slot="start" value="2"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Explicit</ion-label>
+                    <ion-label class="ion-text-wrap">
+                      Acts could contain full nudity and sexual acts. Nothing
+                      too gross or painful though.
+                    </ion-label>
+                    <ion-radio slot="start" value="3"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Edgy</ion-label>
+                    <ion-label class="ion-text-wrap">
+                      Pushing soft boundaries is ok. There's no telling what
+                      this act will involve, but you can manage.
+                    </ion-label>
+                    <ion-radio slot="start" value="4"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Hardcore</ion-label>
+                    <ion-label class="ion-text-wrap">
+                      No holds barred. Use this with people you trust to safely
+                      approach your limits.
+                    </ion-label>
+                    <ion-radio slot="start" value="5"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-card-content>
             </ion-card>
           </ion-col>
         </ion-row>
@@ -104,7 +100,6 @@ import {
   IonContent,
   IonGrid,
   IonButton,
-  IonList,
   IonRadioGroup,
   IonRadio,
   IonLabel,
@@ -134,7 +129,6 @@ export default defineComponent({
     IonContent,
     IonGrid,
     IonButton,
-    IonList,
     IonRadioGroup,
     IonRadio,
     IonLabel,

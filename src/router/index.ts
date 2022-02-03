@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "welcome",
-        component: () => import("@/views/Tab1Page.vue"),
+        component: () => import("@/views/guest/GuestWelcome.vue"),
       },
       {
         path: "login",

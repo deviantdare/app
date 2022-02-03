@@ -2,25 +2,25 @@ import jwtInterceptor from "../../shared/jwtInterceptor";
 import { Commit } from "vuex";
 
 const store = () => ({
-  dare: [],
+  daredata: [],
 });
 
 const getters = {
-  getDare(state: any) {
-    return state.dare;
+  getDareData(state: any) {
+    return state.daredata;
   },
 };
 
 const actions = {
-  async fetchDare({ commit }: { commit: Commit }, id: string) {
+  async fetchDareData({ commit }: { commit: Commit }, id: string) {
     const response = await jwtInterceptor.get("http://localhost:3000/dare/" + id);
-    commit("saveDare", response.data);
+    commit("saveDareData", response.data);
   },
 };
 
 const mutations = {
-  saveDare(state: any, payload: any) {
-    state.dare = payload;
+  saveDareData(state: any, payload: any) {
+    state.daredata = payload;
   },
 };
 
