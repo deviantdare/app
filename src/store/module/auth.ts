@@ -8,10 +8,10 @@ const state = () => ({
     token: "",
     refreshToken: "",
     tokenExp: "",
-    userId: "",
-    userName: "",
+    userid: "",
+    email: "",
   },
-  loginStatus: "success",
+  loginStatus: "",
 });
 
 const getters = {
@@ -32,12 +32,12 @@ const actions = {
     );
     if (response.status == 200 || response.status == 201) {
       await Storage.set({
-        key: "access_token",
-        value: response.data.access_token,
+        key: "token",
+        value: response.data.token,
       });
       await Storage.set({
-        key: "refresh_token",
-        value: response.data.refresh_token,
+        key: "refreshToken",
+        value: response.data.refreshToken,
       });
       commit("saveAuthToken", response.data);
       commit("saveLoginStatus", "success");
@@ -53,12 +53,12 @@ const actions = {
     );
     if (response.status == 200 || response.status == 201) {
       await Storage.set({
-        key: "access_token",
-        value: response.data.access_token,
+        key: "token",
+        value: response.data.token,
       });
       await Storage.set({
-        key: "refresh_token",
-        value: response.data.refresh_token,
+        key: "refreshToken",
+        value: response.data.refreshToken,
       });
       commit("saveAuthToken", response.data);
       commit("saveLoginStatus", "success");
@@ -67,24 +67,24 @@ const actions = {
     }
   },
   async loadStorageTokens({ commit }: { commit: Commit }) {
-    const access_token = await await Storage.get({ key: "access_token" });
-    const refresh_token = await await Storage.get({ key: "refresh_token" });
-    if (access_token && refresh_token) {
+    const token = await await Storage.get({ key: "token" });
+    const refreshToken = await await Storage.get({ key: "refreshToken" });
+    if (token && refreshToken) {
       const tokenData = {
-        access_token: access_token.value,
-        refresh_token: refresh_token.value,
+        token: token.value,
+        refreshToken: refreshToken.value,
       };
       commit("saveAuthToken", tokenData);
     }
   },
   async saveTokensToStorage({ commit }: { commit: Commit }, payload: any) {
     await Storage.set({
-      key: "access_token",
-      value: payload.access_token,
+      key: "token",
+      value: payload.token,
     });
     await Storage.set({
-      key: "refresh_token",
-      value: payload.refresh_token,
+      key: "refreshToken",
+      value: payload.refreshToken,
     });
     commit("saveTokenData", payload);
   },
@@ -92,13 +92,13 @@ const actions = {
 
 const mutations = {
   saveAuthToken(state: any, payload: any) {
-    const jwtDecodeUserInfo = jwtDecrypt(payload.access_token);
+    const jwtDecodeUserInfo = jwtDecrypt(payload.token);
     const newAuthData = {
-      token: payload.access_token,
-      refreshToken: payload.refresh_token,
+      token: payload.token,
+      refreshToken: payload.refreshToken,
       tokenExp: jwtDecodeUserInfo.exp,
-      userId: jwtDecodeUserInfo.sub,
-      userName: jwtDecodeUserInfo.username,
+      userid: jwtDecodeUserInfo.userid,
+      email: jwtDecodeUserInfo.email,
     };
     state.authData = newAuthData;
   },

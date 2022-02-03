@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
-import { RouteRecordRaw } from "vue-router";
+import {
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  RouteRecordRaw,
+} from "vue-router";
 import GuestTabs from "../views/guest/GuestTabs.vue";
 import TabsPage from "../views/guest/GuestTabs.vue";
-import UserTabs from "../views/user/UserTabs.vue"
-import GameTabs from "../views/game/GameTabs.vue"
+import UserTabs from "../views/user/UserTabs.vue";
+import GameTabs from "../views/game/GameTabs.vue";
+import store from "../store/index";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -47,7 +52,8 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "home",
         component: () => import("@/views/user/UserHome.vue"),
-      }
+        meta: { requiredAuth: true },
+      },
     ],
   },
   {
@@ -61,19 +67,23 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "home",
         component: () => import("@/views/game/GameTypeSelector.vue"),
+        meta: { requiredAuth: true },
       },
       {
         path: "dare/:id",
         component: () => import("@/views/game/DareView.vue"),
+        meta: { requiredAuth: true },
       },
       {
         path: "dom/dare",
         component: () => import("@/views/game/dom/DomDare.vue"),
+        meta: { requiredAuth: true },
       },
       {
         path: "dom/finish",
         component: () => import("@/views/game/dom/DomFinish.vue"),
-      }
+        meta: { requiredAuth: true },
+      },
     ],
   },
   {
@@ -96,5 +106,49 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+function guard(
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext,
+  authData: { userid: string }
+) {
+  if (to.meta && to.meta.requiredAuth) {
+    console.log(authData.userid)
+    if (authData && authData.userid !== "") {
+      return next();
+    }
+    return next({ path: "/guest/login" });
+  } else {
+    if (authData && authData.userid === "") {
+      return next({ path: "/user/home" });
+    }
+    return next();
+  }
+}
+
+router.beforeEach(
+  (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    let authData = store.getters["auth/getAuthData"];
+    if (authData.userid == "") {
+      store.dispatch("auth/loadStorageTokens").then(
+        () => {
+          authData = store.getters["auth/getAuthData"];
+          return guard(to, from, next, authData);
+        },
+        (error: any) => {
+          console.log(error);
+          return guard(to, from, next, authData);
+        }
+      );
+    } else {
+      return guard(to, from, next, authData);
+    }
+  }
+);
 
 export default router;

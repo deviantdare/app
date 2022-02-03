@@ -20,8 +20,8 @@ jwtInterceptor.interceptors.response.use(
     if (error.response.status === 401) {
       const authData = store.getters["auth/getAuthData"];
       const payload = {
-        access_token: authData.token,
-        refresh_token: authData.refreshToken,
+        token: authData.token,
+        refreshToken: authData.refreshToken,
       };
       const response = await axios.post(
         "http://localhost:3000/auth/refreshtoken",
@@ -30,7 +30,7 @@ jwtInterceptor.interceptors.response.use(
       await store.dispatch("auth/saveTokensToStorage", response.data);
       error.config.headers[
         "Authorization"
-      ] = `bearer ${response.data.access_token}`;
+      ] = `bearer ${response.data.token}`;
       return axios(error.config);
     } else {
       return Promise.reject(error);
