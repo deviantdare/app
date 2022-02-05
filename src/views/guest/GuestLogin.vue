@@ -85,11 +85,12 @@ export default {
       loginUser: "loginUser",
     }),
     async login() {
-      const showToast = async function (msg) {
+      const showToast = async function (msg, color) {
         const toast = await toastController.create({
           message: msg,
+          position: "top",
           animated: true,
-          color: "danger",
+          color: color,
           duration: 2000,
         });
         return toast.present();
@@ -102,18 +103,22 @@ export default {
         translucent: true,
       });
       if (!this.userInfo.email) {
-        showToast("Email address seems to be missing");
+        showToast("Email address seems to be missing", "danger");
       } else if (!this.userInfo.password) {
-        showToast("Password seems to be missing");
+        showToast("Password seems to be missing", "danger");
       } else {
         await loading.present();
         await this.loginUser(this.userInfo);
         if (this.loginStatus === "success") {
+          showToast("Logged in successfully", "success");
           loading.dismiss();
           this.$router.push("/user/home");
         } else {
           loading.dismiss();
-          showToast("Failed to login due to invalid email or password");
+          showToast(
+            "Failed to login due to invalid email or password",
+            "danger"
+          );
         }
       }
     },

@@ -2,26 +2,22 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Dare View</ion-title>
+        <ion-title>User Home</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Dare View</ion-title>
+          <ion-title size="large">User Home</ion-title>
         </ion-toolbar>
       </ion-header>
       <div id="container">
         <ion-grid fixed>
           <ion-card>
             <ion-card-header>
-              <ion-card-title>Dare Details</ion-card-title>
+              <ion-card-title>Welcome!</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-item>
-                <ion-label>Dare ID:</ion-label>
-                <ion-label>{{ this.$route.params.id }}</ion-label>
-              </ion-item>
               <ion-item>
                 <ion-label>Owner Name:</ion-label>
                 <ion-label>{{ authData.email }}</ion-label>
@@ -30,13 +26,15 @@
           </ion-card>
           <ion-card>
             <ion-card-header>
-              <ion-card-subtitle>Here is your dare</ion-card-subtitle>
+              <ion-button expand="full" @click="showDares()"
+                >Refresh</ion-button
+              >
+              <ion-card-subtitle>Here all your dares</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-item>
+              <ion-item v-for="(dare, index) in allDares" :key="index">
                 <ion-label>{{ dare }}</ion-label>
               </ion-item>
-                            <ion-button expand="full" @click="showDareData()">Refresh</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-grid>
@@ -80,25 +78,24 @@ export default {
     IonContent,
     IonPage,
     IonCardSubtitle,
-
   },
   computed: {
     ...mapGetters("auth", {
       authData: "getAuthData",
     }),
-    ...mapGetters("daredata", {
-      dare: "getDareData",
+    ...mapGetters("dares", {
+      allDares: "getAllDares",
     }),
   },
   created() {
-    this.showDareData();
+    this.showDares();
   },
   methods: {
-    ...mapActions("daredata", {
-      fetchDareData: "fetchDareData",
+    ...mapActions("dares", {
+      fetchDares: "fetchDares",
     }),
-    async showDareData() {
-      await this.fetchDareData(this.$route.params.id);
+    async showDares() {
+      await this.fetchDares();
     },
   },
 };

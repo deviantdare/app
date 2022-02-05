@@ -18,14 +18,14 @@
         <ion-row class="ion-justify-content-center">
           <ion-col>
             <ion-card>
-              
-                <ion-card-header>
-                  <ion-card-subtitle>Dare Description</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content
-                  ><ion-item><ion-textarea></ion-textarea></ion-item>
-                </ion-card-content>
-              
+              <ion-card-header>
+                <ion-card-subtitle>Dare Description</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content
+                ><ion-item
+                  ><ion-textarea v-model="dare.dare"></ion-textarea
+                ></ion-item>
+              </ion-card-content>
             </ion-card>
           </ion-col>
         </ion-row>
@@ -36,7 +36,7 @@
                 <ion-card-subtitle>Select dare difficulty</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <ion-radio-group>
+                <ion-radio-group v-model="dare.difficulty">
                   <ion-item>
                     <ion-label>Titillating</ion-label>
                     <ion-label class="ion-text-wrap">
@@ -82,9 +82,7 @@
             </ion-card>
           </ion-col>
         </ion-row>
-        <ion-button expand="full" @click="() => router.push('/game/dom/finish')"
-          >Demand</ion-button
-        >
+        <ion-button expand="full" @click="submit()">Demand</ion-button>
       </ion-grid></ion-content
     ></ion-page
   >
@@ -110,11 +108,13 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
+  loadingController,
+  toastController,
 } from "@ionic/vue";
 import { warning } from "ionicons/icons";
 import { defineComponent } from "vue";
 import { useRouter } from "vue-router";
-
+import { mapActions, mapGetters } from "vuex";
 export default defineComponent({
   name: "UserHomeContainer",
   props: {
@@ -139,6 +139,60 @@ export default defineComponent({
     IonHeader,
     IonToolbar,
     IonTitle,
+  },
+  data() {
+    return {
+      dare: {
+        difficulty: "",
+        dare: "",
+        type: "dom",
+      },
+    };
+  },
+  computed: {
+    ...mapGetters("game", {
+      getDareState: "getDareState",
+    }),
+  },
+  methods: {
+    ...mapActions("game", {
+      createNewDare: "createNewDare",
+    }),
+    async submit() {
+      const showToast = async function (msg, color) {
+        const toast = await toastController.create({
+          message: msg,
+          position: "top",
+          animated: true,
+          color: color,
+          duration: 2000,
+        });
+        return toast.present();
+      };
+      const loading = await loadingController.create({
+        cssClass: "my-custom-class",
+        message: "Logging in please wait...",
+        duration: this.timeout,
+        backdropDismiss: true,
+        translucent: true,
+      });
+      if (!this.dare.dare) {
+        showToast("Dare description seems to be missing", "danger");
+      } else if (!this.dare.difficulty) {
+        showToast("Dare difficulty seems to be missing", "danger");
+      } else {
+        await loading.present();
+        await this.createNewDare(this.dare);
+        if (this.getDareState.id) {
+          showToast("Dare created successfully", "success");
+          loading.dismiss();
+          this.$router.push("/game/dom/finish");
+        } else {
+          loading.dismiss();
+          showToast("Failed to create new dare", "danger");
+        }
+      }
+    },
   },
   setup() {
     const router = useRouter();

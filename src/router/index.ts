@@ -57,6 +57,26 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/admin/",
+    component: UserTabs,
+    children: [
+      {
+        path: "",
+        redirect: "/admin/dares",
+      },
+      {
+        path: "dares",
+        component: () => import("@/views/admin/AdminDares.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "users",
+        component: () => import("@/views/admin/AdminUsers.vue"),
+        meta: { requiredAuth: true },
+      },
+    ],
+  },
+  {
     path: "/game/",
     component: GameTabs,
     children: [
@@ -82,6 +102,31 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "dom/finish",
         component: () => import("@/views/game/dom/DomFinish.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "sub/difficulty",
+        component: () => import("@/views/game/sub/SubDifficulty.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "sub/offer",
+        component: () => import("@/views/game/sub/SubOffer.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "sub/dare",
+        component: () => import("@/views/game/sub/SubDare.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "sub/decline",
+        component: () => import("@/views/game/sub/SubDecline.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "sub/finish",
+        component: () => import("@/views/game/sub/SubFinish.vue"),
         meta: { requiredAuth: true },
       },
     ],
@@ -114,7 +159,7 @@ function guard(
   authData: { userid: string }
 ) {
   if (to.meta && to.meta.requiredAuth) {
-    console.log(authData.userid)
+    console.log(authData.userid);
     if (authData && authData.userid !== "") {
       return next();
     }

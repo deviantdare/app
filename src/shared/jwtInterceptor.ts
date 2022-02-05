@@ -8,7 +8,7 @@ jwtInterceptor.interceptors.request.use((config: any) => {
   if (authData == null) {
     return config;
   }
-  config.headers.common["Authorization"] = `bearer ${authData.token}`;
+  config.headers.common["Authorization"] = `Bearer ${authData.token}`;
   return config;
 });
 
@@ -30,7 +30,7 @@ jwtInterceptor.interceptors.response.use(
       await store.dispatch("auth/saveTokensToStorage", response.data);
       error.config.headers[
         "Authorization"
-      ] = `bearer ${response.data.token}`;
+      ] = `Bearer ${response.data.token}`;
       return axios(error.config);
     } else {
       return Promise.reject(error);

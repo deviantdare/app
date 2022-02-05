@@ -2,6 +2,7 @@
   <ion-page>
     <div id="container">
       <strong>Your dare was created successfully!</strong>
+      <p>Sharing link: https://www.deviantdare.com/dare/{{ getDareState.id }}</p>
       <p>Choose what to do next</p>
       <br />
       <ion-button fill="outline" @click="() => router.push('/game/dom/dare')">
@@ -17,6 +18,8 @@
  <script>
 import { useRouter } from "vue-router";
 import { IonButton, IonPage } from "@ionic/vue";
+import { mapGetters } from "vuex";
+
 export default {
   name: "ExploreContainer",
   props: {
@@ -25,6 +28,11 @@ export default {
   components: {
     IonButton,
     IonPage,
+  },
+  computed: {
+    ...mapGetters("game", {
+      getDareState: "getDareState",
+    }),
   },
   setup() {
     const router = useRouter();

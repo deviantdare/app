@@ -75,6 +75,7 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
+  IonCard
 } from "@ionic/vue";
 import { warning, wifi } from "ionicons/icons";
 import { defineComponent } from "vue";
@@ -95,6 +96,7 @@ export default defineComponent({
     IonHeader,
     IonToolbar,
     IonTitle,
+    IonCard
   },
   setup() {
     return { warning, wifi };

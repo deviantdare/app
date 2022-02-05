@@ -13,7 +13,7 @@ const getters = {
 
 const actions = {
   async fetchDares({ commit }: { commit: Commit }) {
-    const response = await jwtInterceptor.get("http://localhost:3000/dares");
+    const response = await jwtInterceptor.get("http://localhost:3000/user/dares");
     commit("saveAllDares", response.data);
   },
 };

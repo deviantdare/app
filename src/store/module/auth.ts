@@ -45,6 +45,18 @@ const actions = {
       commit("saveLoginStatus", "failed");
     }
   },
+  async logoutUser({ commit }: { commit: Commit }) {
+      await Storage.set({
+        key: "token",
+        value: "",
+      });
+      await Storage.set({
+        key: "refreshToken",
+        value: "",
+      });
+      commit("clearAuthToken");
+      commit("saveLoginStatus", "failed");
+  },
   async registerUser({ commit }: { commit: Commit }, payload: any) {
     console.log(payload);
     const response = await axios.post(
@@ -99,6 +111,16 @@ const mutations = {
       tokenExp: jwtDecodeUserInfo.exp,
       userid: jwtDecodeUserInfo.userid,
       email: jwtDecodeUserInfo.email,
+    };
+    state.authData = newAuthData;
+  },
+  clearAuthToken(state: any) {
+    const newAuthData = {
+      token: "",
+      refreshToken: "",
+      tokenExp: "",
+      userid: "",
+      email: "",
     };
     state.authData = newAuthData;
   },
