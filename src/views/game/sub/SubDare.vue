@@ -28,6 +28,7 @@
                 >We will be sharing it only with dare creator</ion-card-subtitle
               >
             </ion-card-header>
+            {{ authData }}
             <ion-card-content>
               <ion-button @click="takePhoto()"
                 ><ion-icon :icon="camera"></ion-icon
@@ -189,7 +190,7 @@ export default defineComponent({
         showToast("Dare proof seems to be missing", "danger");
       } else {
         await loading.present();
-        const payload = { reply: this.reply, photos: this.photos } 
+        const payload = { reply: this.reply, photos: this.photos };
         await this.finishDare(payload);
         if (this.fetchDare === "success") {
           showToast("Dare was replied successfully", "success");
