@@ -10,17 +10,14 @@
         <ion-row class="ion-justify-content-center">
           <ion-card>
             <ion-card-header>
-              <ion-card-title
-                >✨ Explore your fantasies online</ion-card-title
-              >
+              <ion-card-title>✨ Explore your fantasies online</ion-card-title>
               <ion-card-content>
                 <p>
                   We are a safe, private space to share a photo of your sexual
-                  fantasy with a stranger or a lover.
-                  Control your own experience, from who you interact with, to
-                  how explicit or kinky your interests are.
-                  We wont show this demand to them unless they first consent to
-                  perform the dare of your choice.
+                  fantasy with a stranger or a lover. Control your own
+                  experience, from who you interact with, to how explicit or
+                  kinky your interests are. We wont show this demand to them
+                  unless they first consent to perform the dare of your choice.
                 </p>
               </ion-card-content>
             </ion-card-header>
@@ -43,7 +40,8 @@
                   share the link allowing others to claim it with those you
                   like, or open it up for strangers. If you don’t want to
                   initiate things, browse through our list of people offering
-                  their own dares, and choose the one who interests you.</p>
+                  their own dares, and choose the one who interests you.
+                </p>
               </ion-card-content>
             </ion-card-header>
           </ion-card>

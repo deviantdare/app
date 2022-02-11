@@ -21,7 +21,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
       <ion-fab vertical="bottom" horizontal="center" slot="fixed">
         <ion-fab-button @click="takePhoto()">
           <ion-icon :icon="camera"></ion-icon>
