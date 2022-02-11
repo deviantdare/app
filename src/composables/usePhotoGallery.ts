@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { ref, onMounted, watch } from "vue";
-import { Capacitor } from "@capacitor/core";
 import {
   Camera,
   CameraSource,

@@ -86,19 +86,19 @@ export default {
     ...mapGetters("auth", {
       authData: "getAuthData",
     }),
-    ...mapGetters("daredata", {
-      dare: "getDareData",
+    ...mapGetters("dare", {
+      dare: "getDare",
     }),
   },
   created() {
-    this.showDareData();
+    this.showDare();
   },
   methods: {
     ...mapActions("daredata", {
-      fetchDareData: "fetchDareData",
+      fetchDare: "fetchDare",
     }),
-    async showDareData() {
-      await this.fetchDareData(this.$route.params.id);
+    async showDare() {
+      await this.fetchDare(this.$route.params.id);
     },
   },
 };
