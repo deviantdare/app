@@ -123,6 +123,8 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
+  IonRow,
+  IonList,
   IonCardSubtitle,
   actionSheetController,
   loadingController,
@@ -148,6 +150,7 @@ export default defineComponent({
     IonGrid,
     IonButton,
     IonCol,
+    IonList,
     IonTextarea,
     IonCard,
     IonCardTitle,
@@ -155,9 +158,10 @@ export default defineComponent({
     IonToolbar,
     IonTitle,
     IonCardSubtitle,
+    IonRow
   },
   setup() {
-    const { photos, takePhoto, deletePhoto } = usePhotoGallery();
+    const { photos, takePhoto, deletePhoto, clearPhotos } = usePhotoGallery();
     const showActionSheet = async (photo: UserPhoto) => {
       const actionSheet = await actionSheetController.create({
         header: "Photos",
@@ -188,6 +192,7 @@ export default defineComponent({
       router,
       photos,
       takePhoto,
+      clearPhotos,
       showActionSheet,
       camera,
       trash,
@@ -239,6 +244,7 @@ export default defineComponent({
         };
         await this.finishDare(payload);
         if (this.getDareState.status === "completed") {
+          this.clearPhotos()
           showToast("Dare was replied successfully", "success");
           loading.dismiss();
           this.$router.push("/game/sub/finish");
@@ -286,7 +292,7 @@ export default defineComponent({
   },
   data() {
     return {
-      rating: Number,
+      rating: '',
       reply: "",
       dareData: {},
     };

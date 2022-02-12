@@ -199,7 +199,7 @@ export default defineComponent({
         });
         return toast.present();
       };
-      console.log(this.userInfo);
+      // console.log(this.userInfo);
       if (!this.userInfo.email) {
         return showToast("Email address seems to missing");
       } else if (!this.userInfo.password) {

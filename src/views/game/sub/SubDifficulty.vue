@@ -177,7 +177,7 @@ export default defineComponent({
       } else {
         await loading.present();
         await this.getNewDare(difficulty, "sub");
-        console.log(this.getDareState);
+        // console.log(this.getDareState);
         if (this.getDareState.id) {
           showToast("Retrived new dare successfully", "success");
           loading.dismiss();

@@ -8,7 +8,7 @@ const state = () => ({
     access_token: "",
     refresh_token: "",
     tokenExp: "",
-    userid: "",
+    userId: "",
     email: "",
   },
   loginStatus: "",
@@ -25,7 +25,7 @@ const getters = {
 
 const actions = {
   async loginUser({ commit }: { commit: Commit }, payload: any) {
-    console.log(payload);
+    // console.log(payload);
     const response = await axios.post(
       "http://localhost:3000/auth/login",
       payload
@@ -58,7 +58,7 @@ const actions = {
     commit("saveLoginStatus", "failed");
   },
   async registerUser({ commit }: { commit: Commit }, payload: any) {
-    console.log(payload);
+    // console.log(payload);
     const response = await axios.post(
       "http://localhost:3000/auth/register",
       payload
@@ -104,12 +104,12 @@ const actions = {
 
 const mutations = {
   saveAuthToken(state: any, payload: any) {
-    const jwtDecodeUserInfo = jwtDecrypt(payload.token);
+    const jwtDecodeUserInfo = jwtDecrypt(payload.access_token);
     const newAuthData = {
       access_token: payload.access_token,
       refresh_token: payload.refresh_token,
       tokenExp: jwtDecodeUserInfo.exp,
-      userid: jwtDecodeUserInfo.userid,
+      userId: jwtDecodeUserInfo.userId,
       email: jwtDecodeUserInfo.email,
     };
     state.authData = newAuthData;
@@ -119,7 +119,7 @@ const mutations = {
       access_token: "",
       refresh_token: "",
       tokenExp: "",
-      userid: "",
+      userId: "",
       email: "",
     };
     state.authData = newAuthData;

@@ -125,7 +125,7 @@ export default defineComponent({
       } else {
         await loading.present();
         await this.updateDareStatus({ status, id: this.getDareState.id });
-        console.log(this.getDareState);
+        // console.log(this.getDareState);
         if (this.getDareState.taker !== "") {
           showToast("Retrived new dare successfully", "success");
           loading.dismiss();

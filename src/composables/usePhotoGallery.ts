@@ -117,6 +117,17 @@ export function usePhotoGallery() {
       value: JSON.stringify(photos.value),
     });
   };
+
+  const clearPhotos = () => {
+    Storage.set({
+      key: PHOTO_STORAGE,
+      value: "",
+    });
+    for (let i = 0; i < photos.value.length; i++) {
+      photos.value.pop();
+    }
+  };
+
   loadSaved;
   onMounted(loadSaved);
   watch(photos, cachePhotos);
@@ -125,5 +136,6 @@ export function usePhotoGallery() {
     photos,
     takePhoto,
     deletePhoto,
+    clearPhotos,
   };
 }

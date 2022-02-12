@@ -1,7 +1,7 @@
-export function jwtDecrypt(token: string) {
-  if (token) {
-    // console.log({ ok: "token: " + token });
-    const base64Url = token.split(".")[1];
+export function jwtDecrypt(access_token: string) {
+  if (access_token) {
+    console.log({ ok: "token: " + access_token });
+    const base64Url = access_token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
       atob(base64)
@@ -11,7 +11,6 @@ export function jwtDecrypt(token: string) {
         })
         .join("")
     );
-    // console.log({ tokenData: jsonPayload });
     return JSON.parse(jsonPayload);
   } else {
     console.log({ error: "no token supplied" });

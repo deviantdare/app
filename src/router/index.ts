@@ -156,16 +156,16 @@ function guard(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
-  authData: { userid: string }
+  authData: { userId: string }
 ) {
   if (to.meta && to.meta.requiredAuth) {
-    console.log(authData.userid);
-    if (authData && authData.userid !== "") {
+    // console.log(authData.userId);
+    if (authData && authData.userId !== "") {
       return next();
     }
     return next({ path: "/guest/login" });
   } else {
-    if (authData && authData.userid === "") {
+    if (authData && authData.userId === "") {
       return next({ path: "/user/home" });
     }
     return next();
@@ -179,7 +179,7 @@ router.beforeEach(
     next: NavigationGuardNext
   ) => {
     let authData = store.getters["auth/getAuthData"];
-    if (authData.userid == "") {
+    if (authData.userId == "") {
       store.dispatch("auth/loadStorageTokens").then(
         () => {
           authData = store.getters["auth/getAuthData"];

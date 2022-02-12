@@ -20,7 +20,7 @@
             <ion-card-content>
               <ion-item>
                 <ion-label>Owner Name:</ion-label>
-                <ion-label>{{ authData.email }}</ion-label>
+                <ion-label>{{ authData.userId }}</ion-label>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -29,18 +29,24 @@
               <ion-button expand="full" @click="showDares()"
                 >Refresh</ion-button
               >
-              <ion-card-subtitle>Here all your dares</ion-card-subtitle>
+              <ion-card-subtitle>Your dares</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
               <ion-item v-for="(dare, index) in allDares" :key="index">
-                <ion-label>{{ dare }}</ion-label>
+                <ion-label>{{ dare.id }}</ion-label>
+                <ion-chip outline color="success" v-if="dare.status === 'completed'">{{ dare.status }}</ion-chip>
+                <ion-chip outline color="secondary" v-else-if="dare.status === 'accepted'">{{ dare.status }}</ion-chip>
+                <ion-chip outline color="danger" v-else-if="dare.status === 'declined'">{{ dare.status }}</ion-chip>
+                <ion-chip outline v-else>{{dare.status}}</ion-chip>
+                <ion-label v-if="dare.photos[0]"
+                  ><img :src="dare.photos[0].webviewPath"
+                /></ion-label>
+                <ion-label v-else></ion-label>
               </ion-item>
             </ion-card-content>
           </ion-card>
-        </ion-grid>
-      </div></ion-content
-    ></ion-page
-  >
+        </ion-grid></div></ion-content
+  ></ion-page>
 </template>
 <script>
 import {

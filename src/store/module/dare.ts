@@ -10,7 +10,7 @@ const state = () => ({
     type: "",
     description: "",
     difficulty: "",
-    proof: "",
+    photos: "",
     reply: "",
     winner: "",
     ownerRate: "",
@@ -79,15 +79,15 @@ const mutations = {
       type: payload.type,
       description: payload.description,
       difficulty: payload.difficulty,
-      proof: payload.proof,
+      photos: payload.photos,
       reply: payload.reply,
       winner: payload.winner,
       ownerRate: payload.ownerRate,
       takerRate: payload.takerRate,
       gesture: payload.gesture,
     };
-    state.dareData = newDareData
-  }
+    state.dareData = newDareData;
+  },
 };
 
 export default {
