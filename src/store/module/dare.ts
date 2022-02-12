@@ -1,8 +1,8 @@
 import jwtInterceptor from "../../shared/jwtInterceptor";
 import { Commit } from "vuex";
 
-const store = () => ({
-  dare: {
+const state = () => ({
+  dareData: {
     id: "",
     owner: "",
     taker: "",
@@ -21,7 +21,7 @@ const store = () => ({
 
 const getters = {
   getDareState(state: any) {
-    return state.dare;
+    return state.dareData;
   },
 };
 
@@ -46,6 +46,20 @@ const actions = {
     );
     commit("saveDare", response.data);
   },
+  async finishDare({ commit }: { commit: Commit }, payload: any) {
+    const response = await jwtInterceptor.post(
+      "http://localhost:3000/dare/finish",
+      payload
+    );
+    commit("saveDare", response.data);
+  },
+  async declineDare({ commit }: { commit: Commit }, payload: any) {
+    const response = await jwtInterceptor.post(
+      "http://localhost:3000/dare/decline",
+      payload
+    );
+    commit("saveDare", response.data);
+  },
   async updateDareStatus({ commit }: { commit: Commit }, data: any) {
     const response = await jwtInterceptor.post(
       "http://localhost:3000/dare/status",
@@ -57,7 +71,7 @@ const actions = {
 
 const mutations = {
   saveDare(state: any, payload: any) {
-    state.dare = {
+    const newDareData = {
       id: payload.id,
       owner: payload.owner,
       taker: payload.taker,
@@ -67,17 +81,18 @@ const mutations = {
       difficulty: payload.difficulty,
       proof: payload.proof,
       reply: payload.reply,
-      winner: "",
-      ownerRate: "",
-      takerRate: "",
-      gesture: "",
+      winner: payload.winner,
+      ownerRate: payload.ownerRate,
+      takerRate: payload.takerRate,
+      gesture: payload.gesture,
     };
-  },
+    state.dareData = newDareData
+  }
 };
 
 export default {
   namespaced: true,
-  store,
+  state,
   getters,
   actions,
   mutations,

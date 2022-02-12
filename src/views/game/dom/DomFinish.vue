@@ -30,7 +30,7 @@ export default {
     IonPage,
   },
   computed: {
-    ...mapGetters("game", {
+    ...mapGetters("dare", {
       getDareState: "getDareState",
     }),
   },

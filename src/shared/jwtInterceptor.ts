@@ -8,7 +8,7 @@ jwtInterceptor.interceptors.request.use((config: any) => {
   if (authData == null) {
     return config;
   }
-  config.headers.common["Authorization"] = `Bearer ${authData.token}`;
+  config.headers.common["Authorization"] = `Bearer ${authData.access_token}`;
   return config;
 });
 
@@ -20,17 +20,15 @@ jwtInterceptor.interceptors.response.use(
     if (error.response.status === 401) {
       const authData = store.getters["auth/getAuthData"];
       const payload = {
-        token: authData.token,
-        refreshToken: authData.refreshToken,
+        access_token: authData.access_token,
+        refresh_token: authData.refresh_token,
       };
       const response = await axios.post(
-        "http://localhost:3000/auth/refreshtoken",
+        "http://localhost:3000/auth/refresh_token",
         payload
       );
       await store.dispatch("auth/saveTokensToStorage", response.data);
-      error.config.headers[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
+      error.config.headers["Authorization"] = `Bearer ${response.data.access_token}`;
       return axios(error.config);
     } else {
       return Promise.reject(error);

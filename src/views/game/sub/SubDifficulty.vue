@@ -146,12 +146,12 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters("game", {
+    ...mapGetters("dare", {
       getDareState: "getDareState",
     }),
   },
   methods: {
-    ...mapActions("game", {
+    ...mapActions("dare", {
       getNewDare: "getNewDare",
     }),
     async submit(difficulty) {
@@ -177,13 +177,14 @@ export default defineComponent({
       } else {
         await loading.present();
         await this.getNewDare(difficulty, "sub");
+        console.log(this.getDareState);
         if (this.getDareState.id) {
           showToast("Retrived new dare successfully", "success");
           loading.dismiss();
           this.$router.push("/game/sub/offer");
         } else {
           loading.dismiss();
-          showToast("Failed to retrive new dare", "danger");
+          showToast("There are no free dares for this category", "danger");
         }
       }
     },
@@ -197,6 +198,10 @@ export default defineComponent({
 
 
 <style scoped>
+#container {
+  text-align: center;
+}
+
 #container strong {
   font-size: 20px;
   line-height: 26px;

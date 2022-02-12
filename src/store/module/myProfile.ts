@@ -1,7 +1,7 @@
 import jwtInterceptor from "../../shared/jwtInterceptor";
 import { Commit } from "vuex";
 
-const store = () => ({
+const state = () => ({
   myprofile: [],
 });
 
@@ -26,7 +26,7 @@ const mutations = {
 
 export default {
   namespaced: true,
-  store,
+  state,
   getters,
   actions,
   mutations,

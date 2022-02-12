@@ -27,7 +27,7 @@
                 @click="submit('accepted')"
                 >Consent</ion-button
               >
-              <ion-button expand="full" @click="submit('decline')"
+              <ion-button expand="full" @click="decline()"
                 >Decline</ion-button
               ></ion-card-content
             >
@@ -91,14 +91,17 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters("game", {
+    ...mapGetters("dare", {
       getDareState: "getDareState",
     }),
   },
   methods: {
-    ...mapActions("game", {
+    ...mapActions("dare", {
       updateDareStatus: "updateDareStatus",
     }),
+    async decline() {
+      this.$router.push("/game");
+    },
     async submit(status) {
       const showToast = async function (msg, color) {
         const toast = await toastController.create({

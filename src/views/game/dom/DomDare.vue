@@ -150,12 +150,12 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters("game", {
+    ...mapGetters("dare", {
       getDareState: "getDareState",
     }),
   },
   methods: {
-    ...mapActions("game", {
+    ...mapActions("dare", {
       createNewDare: "createNewDare",
     }),
     async submit() {
@@ -183,6 +183,7 @@ export default defineComponent({
       } else {
         await loading.present();
         await this.createNewDare(this.dare);
+        console.log(this.getDareState)
         if (this.getDareState.id) {
           showToast("Dare created successfully", "success");
           loading.dismiss();

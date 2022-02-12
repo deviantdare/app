@@ -11,13 +11,15 @@
           <ion-card class="ion-justify-content-center">
             <ion-card-header align="center">
               <ion-card-title color="primary"
-                >USERNAME has deman
+                >{{ getDareState.owner }} has deman
               </ion-card-title>
               <ion-card-subtitle
                 >wants you to perform a deviant dare</ion-card-subtitle
               >
             </ion-card-header>
-            <ion-card-content align="left"> sadasda </ion-card-content>
+            <ion-card-content align="left">
+              {{ getDareState.description }}
+            </ion-card-content>
           </ion-card>
           <ion-card class="ion-justify-content-center">
             <ion-card-header>
@@ -28,7 +30,6 @@
                 >We will be sharing it only with dare creator</ion-card-subtitle
               >
             </ion-card-header>
-            {{ authData }}
             <ion-card-content>
               <ion-button @click="takePhoto()"
                 ><ion-icon :icon="camera"></ion-icon
@@ -45,7 +46,6 @@
               </ion-row>
             </ion-grid>
           </ion-card>
-          {{ dare }}
           <ion-card class="ion-justify-content-center">
             <ion-col size="10">
               <ion-item>
@@ -57,7 +57,44 @@
                     ><ion-textarea v-model="reply"></ion-textarea>
                   </ion-card-content>
                 </ion-card-header>
-              </ion-item>
+              </ion-item> </ion-col
+            >
+          </ion-card>
+                    <ion-card class="ion-justify-content-center">
+            <ion-col size="10">
+              <ion-card-header>
+                <ion-card-subtitle>Rate this dare</ion-card-subtitle>
+                <ion-card-content>
+  <ion-list>
+    <ion-radio-group v-model="rating">
+      <ion-item>
+        <ion-label>WTF is this?</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>That was too much</ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>It was Ok</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>I enjoyed it</ion-label>
+        <ion-radio value="4"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>WOW it was epic!</ion-label>
+        <ion-radio value="5"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+                </ion-card-content>
+              </ion-card-header>
             </ion-col>
           </ion-card>
           <ion-button expand="full" color="success" @click="submit()"
@@ -159,12 +196,16 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters("dare", {
-      fetchDare: "fetchDare",
+      getDareState: "getDareState",
+    }),
+    ...mapGetters("auth", {
+      authData: "getAuthData",
     }),
   },
   methods: {
     ...mapActions("dare", {
       finishDare: "finishDare",
+      declineDare: "declineDare",
     }),
     async submit() {
       const showToast = async function (msg: string, color: string) {
@@ -190,22 +231,64 @@ export default defineComponent({
         showToast("Dare proof seems to be missing", "danger");
       } else {
         await loading.present();
-        const payload = { reply: this.reply, photos: this.photos };
+        const payload = {
+          dare: this.getDareState,
+          reply: this.reply,
+          photos: this.photos,
+          rating: this.rating
+        };
         await this.finishDare(payload);
-        if (this.fetchDare === "success") {
+        if (this.getDareState.status === "completed") {
           showToast("Dare was replied successfully", "success");
           loading.dismiss();
-          this.$router.push("/game/dare/sub/finish");
+          this.$router.push("/game/sub/finish");
         } else {
           loading.dismiss();
           showToast("Failed to submit dare reply please try again", "danger");
         }
       }
     },
+    async decline() {
+      const showToast = async function (msg: string, color: string) {
+        const toast = await toastController.create({
+          message: msg,
+          position: "top",
+          animated: true,
+          color: color,
+          duration: 2000,
+        });
+        return toast.present();
+      };
+      const loading = await loadingController.create({
+        cssClass: "my-custom-class",
+        message: "Logging in please wait...",
+        duration: 2000,
+        backdropDismiss: true,
+        translucent: true,
+      });
+      await loading.present();
+      const payload = {
+        id: this.getDareState.id,
+        owner: this.getDareState.owner,
+        taker: this.getDareState.taker,
+        rating: this.rating,
+      };
+      await this.declineDare(payload);
+      if (this.getDareState.status === "declined") {
+        showToast("Dare was declined successfully", "success");
+        loading.dismiss();
+        this.$router.push("/game/sub/decline");
+      } else {
+        loading.dismiss();
+        showToast("Failed to submit dare reply please try again", "danger");
+      }
+    },
   },
   data() {
     return {
+      rating: Number,
       reply: "",
+      dareData: {},
     };
   },
 });
@@ -214,10 +297,6 @@ export default defineComponent({
 <style scoped>
 #container {
   text-align: center;
-  position: relative;
-  left: 0;
-  right: 0;
-  top: 5%;
 }
 
 #container strong {
