@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>User Home</ion-title>
+        <ion-title>Dares Admin</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -26,13 +26,13 @@
           </ion-card>
           <ion-card>
             <ion-card-header>
-              <ion-button expand="full" @click="showDares()"
+              <ion-button expand="full" @click="showAdminDares()"
                 >Refresh</ion-button
               >
               <ion-card-subtitle>Here all your dares</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-item v-for="(dare, index) in allDares" :key="index">
+              <ion-item v-for="(dare, index) in allAdminDares" :key="index">
                 <ion-label>{{ dare }}</ion-label>
               </ion-item>
             </ion-card-content>
@@ -83,19 +83,19 @@ export default {
     ...mapGetters("auth", {
       authData: "getAuthData",
     }),
-    ...mapGetters("dares", {
-      allDares: "getAllDares",
+    ...mapGetters("admindares", {
+      allAdminDares: "getAllAdminDares",
     }),
   },
   created() {
-    this.showDares();
+    this.showAdminDares();
   },
   methods: {
-    ...mapActions("dares", {
-      fetchDares: "fetchDares",
+    ...mapActions("admindares", {
+      adminFetchDares: "adminFetchDares",
     }),
-    async showDares() {
-      await this.fetchDares();
+    async showAdminDares() {
+      await this.adminFetchDares();
     },
   },
 };
