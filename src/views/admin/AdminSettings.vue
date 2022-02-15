@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Users Admin</ion-title>
+        <ion-title>Global Settings</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -61,7 +61,7 @@ import {
 } from "@ionic/vue";
 
 import { mapGetters, mapActions } from "vuex";
-import { useRouter } from "vue-router";
+
 export default {
   components: {
     IonCard,
@@ -96,10 +96,6 @@ export default {
     }),
     async showAdminDares() {
       await this.adminFetchDares();
-    },
-    setup() {
-      const router = useRouter();
-      return { router };
     },
   },
 };

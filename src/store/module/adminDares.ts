@@ -35,7 +35,7 @@ const actions = {
   async adminDeleteDare({ commit }: { commit: Commit }, payload: any) {
     const response = await jwtInterceptor.post(
       "http://localhost:3000/admin/dare/delete",
-      payload
+      { id: payload }
     );
     commit("saveAllAdminDares", response.data);
   },

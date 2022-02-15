@@ -2,6 +2,13 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="end">
+            {{ authData.displayname }}
+            <ion-avatar
+              ><img
+                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" /></ion-avatar
+          >
+        </ion-buttons>
         <ion-title>User Home</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -34,10 +41,25 @@
             <ion-card-content>
               <ion-item v-for="(dare, index) in allDares" :key="index">
                 <ion-label>{{ dare.id }}</ion-label>
-                <ion-chip outline color="success" v-if="dare.status === 'completed'">{{ dare.status }}</ion-chip>
-                <ion-chip outline color="secondary" v-else-if="dare.status === 'accepted'">{{ dare.status }}</ion-chip>
-                <ion-chip outline color="danger" v-else-if="dare.status === 'declined'">{{ dare.status }}</ion-chip>
-                <ion-chip outline v-else>{{dare.status}}</ion-chip>
+                <ion-chip
+                  outline
+                  color="success"
+                  v-if="dare.status === 'completed'"
+                  >{{ dare.status }}</ion-chip
+                >
+                <ion-chip
+                  outline
+                  color="secondary"
+                  v-else-if="dare.status === 'accepted'"
+                  >{{ dare.status }}</ion-chip
+                >
+                <ion-chip
+                  outline
+                  color="danger"
+                  v-else-if="dare.status === 'declined'"
+                  >{{ dare.status }}</ion-chip
+                >
+                <ion-chip outline v-else>{{ dare.status }}</ion-chip>
                 <ion-label v-if="dare.photos[0]"
                   ><img :src="dare.photos[0].webviewPath"
                 /></ion-label>

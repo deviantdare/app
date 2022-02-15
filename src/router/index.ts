@@ -8,6 +8,7 @@ import GuestTabs from "../views/guest/GuestTabs.vue";
 import TabsPage from "../views/guest/GuestTabs.vue";
 import UserTabs from "../views/user/UserTabs.vue";
 import GameTabs from "../views/game/GameTabs.vue";
+import AdminTabs from "../views/admin/AdminTabs.vue"
 import store from "../store/index";
 
 const routes: Array<RouteRecordRaw> = [
@@ -54,15 +55,25 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/user/UserHome.vue"),
         meta: { requiredAuth: true },
       },
+      {
+        path: "logout",
+        component: () => import("@/views/user/UserLogout.vue"),
+        meta: { requiredAuth: true },
+      },
     ],
   },
   {
     path: "/admin/",
-    component: UserTabs,
+    component: AdminTabs,
     children: [
       {
         path: "",
-        redirect: "/admin/dares",
+        redirect: "/admin/home",
+      },
+      {
+        path: "home",
+        component: () => import("@/views/admin/AdminHome.vue"),
+        meta: { requiredAuth: true },
       },
       {
         path: "dares",
@@ -72,6 +83,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "users",
         component: () => import("@/views/admin/AdminUsers.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "settings",
+        component: () => import("@/views/admin/AdminSettings.vue"),
         meta: { requiredAuth: true },
       },
     ],

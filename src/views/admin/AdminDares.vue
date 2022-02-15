@@ -13,36 +13,46 @@
       </ion-header>
       <div id="container">
         <ion-grid fixed>
+          <ion-button @click="showAdminDares()">Refresh</ion-button>
           <ion-card>
-            <ion-card-header>
-              <ion-card-title>Welcome!</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-item>
-                <ion-label>Owner Name:</ion-label>
-                <ion-label>{{ authData.email }}</ion-label>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-          <ion-card>
-            <ion-card-header>
-              <ion-button expand="full" @click="showAdminDares()"
-                >Refresh</ion-button
+            <ion-item v-for="(dare, index) in allAdminDares" :key="index">
+              <ion-label stacked>{{ dare.status }}</ion-label>
+              <ion-label stacked>{{ dare.owner }} </ion-label>
+              <ion-label v-if="dare.taker">{{ dare.taker }}</ion-label>
+              <ion-label>{{ dare.difficulty }}</ion-label>
+              <ion-label>{{ dare.description }}</ion-label>
+              <ion-button
+                slot="end"
+                color="white"
+                @click="() => router.push('/admin/dare/view/' + dare._id)"
               >
-              <ion-card-subtitle>Here all your dares</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-item v-for="(dare, index) in allAdminDares" :key="index">
-                <ion-label>{{ dare }}</ion-label>
-              </ion-item>
-            </ion-card-content>
+                View
+                <ion-icon :icon="list" slot="end"></ion-icon>
+              </ion-button>
+              <ion-button
+                slot="end"
+                color="warning"
+                @click="() => router.push('/admin/dare/edit/' + dare._id)"
+              >
+                Edit
+                <ion-icon :icon="create" slot="end"></ion-icon>
+              </ion-button>
+              <ion-button
+                slot="end"
+                color="primary"
+                @click="() => adminDeleteDare(dare._id)"
+              >
+                Delete
+                <ion-icon :icon="trash" slot="end"></ion-icon>
+              </ion-button>
+            </ion-item>
           </ion-card>
-        </ion-grid>
-      </div></ion-content
-    ></ion-page
-  >
+        </ion-grid></div></ion-content
+  ></ion-page>
 </template>
-<script>
+<script type="ts">
+import { useRouter } from "vue-router";
+import { list, create, trash } from "ionicons/icons";
 import {
   IonCard,
   IonCardHeader,
@@ -93,10 +103,20 @@ export default {
   methods: {
     ...mapActions("admindares", {
       adminFetchDares: "adminFetchDares",
+      adminDeleteDare: "adminDeleteDare",
     }),
     async showAdminDares() {
       await this.adminFetchDares();
     },
+  },
+  setup() {
+    const router = useRouter();
+    return {
+      router,
+      list,
+      create,
+      trash,
+    };
   },
 };
 </script>
@@ -107,8 +127,6 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 #container strong {
