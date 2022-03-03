@@ -3,11 +3,15 @@ import { Commit } from "vuex";
 
 const state = () => ({
   admindares: [],
+  admindare: [],
 });
 
 const getters = {
   getAllAdminDares(state: any) {
     return state.admindares;
+  },
+  getAdminDare(state: any) {
+    return state.admindare;
   },
 };
 
@@ -17,6 +21,13 @@ const actions = {
       "http://localhost:3000/admin/dare/all"
     );
     commit("saveAllAdminDares", response.data);
+  },
+  async adminFetchDare({ commit }: { commit: Commit }, id: any) {
+    const response = await jwtInterceptor.post(
+      "http://localhost:3000/admin/dare/view",
+      { id }
+    );
+    commit("saveAdminDare", response.data);
   },
   async adminCreateDare({ commit }: { commit: Commit }, payload: any) {
     const response = await jwtInterceptor.post(
@@ -44,6 +55,9 @@ const actions = {
 const mutations = {
   saveAllAdminDares(state: any, payload: any) {
     state.admindares = payload;
+  },
+  saveAdminDare(state: any, payload: any) {
+    state.admindare = payload;
   },
 };
 

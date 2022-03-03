@@ -13,40 +13,55 @@
       </ion-header>
       <div id="container">
         <ion-grid fixed>
-          <ion-button @click="showAdminDares()">Refresh</ion-button>
-          <ion-card>
-            <ion-item v-for="(dare, index) in allAdminDares" :key="index">
-              <ion-label stacked>{{ dare.status }}</ion-label>
-              <ion-label stacked>{{ dare.owner }} </ion-label>
-              <ion-label v-if="dare.taker">{{ dare.taker }}</ion-label>
-              <ion-label>{{ dare.difficulty }}</ion-label>
-              <ion-label>{{ dare.description }}</ion-label>
-              <ion-button
-                slot="end"
-                color="white"
-                @click="() => router.push('/admin/dare/view/' + dare._id)"
-              >
-                View
-                <ion-icon :icon="list" slot="end"></ion-icon>
-              </ion-button>
-              <ion-button
-                slot="end"
-                color="warning"
-                @click="() => router.push('/admin/dare/edit/' + dare._id)"
-              >
-                Edit
-                <ion-icon :icon="create" slot="end"></ion-icon>
-              </ion-button>
-              <ion-button
-                slot="end"
-                color="primary"
-                @click="() => adminDeleteDare(dare._id)"
-              >
-                Delete
-                <ion-icon :icon="trash" slot="end"></ion-icon>
-              </ion-button>
-            </ion-item>
-          </ion-card>
+            <ion-item-divider>
+            <ion-button color="warning" slot="end" @click="showAdminDares()"
+              >Refresh</ion-button
+            >
+            </ion-item-divider>
+            <ion-card v-for="(dare, index) in allAdminDares" :key="index">
+              <ion-item-divider :color="statusColor(dare.status)">
+                <ion-label slot="start">{{
+                  dare.status.toUpperCase()
+                }}</ion-label>
+                <ion-button
+                  slot="end"
+                  color="danger"
+                  @click="() => router.push('/admin/dare/edit/' + dare._id)"
+                >
+                  Edit
+                  <ion-icon :icon="create" slot="start"></ion-icon>
+                </ion-button>
+                <ion-button
+                  slot="end"
+                  color="primary"
+                  @click="() => adminDeleteDare(dare._id)"
+                >
+                  Delete
+                  <ion-icon :icon="trash" slot="start"></ion-icon>
+                </ion-button>
+                <ion-button
+                  slot="end"
+                  color="light"
+                  @click="() => router.push('/admin/dare/view/' + dare._id)"
+                >
+                  View
+                  <ion-icon :icon="list" slot="start"></ion-icon>
+                </ion-button>
+              </ion-item-divider>
+              <ion-item-divider>
+                <ion-label>{{ dare.owner }} </ion-label>
+              </ion-item-divider>
+              <ion-item-divider v-if="dare.taker">
+                <ion-label>{{ dare.taker }}</ion-label>
+              </ion-item-divider>
+              <ion-item-divider>
+                <ion-label>{{ dare.difficulty }}</ion-label>
+              </ion-item-divider>
+              <ion-item-divider>
+                <ion-label>{{ dare.description }}</ion-label>
+              </ion-item-divider>
+              <ion-card-footer></ion-card-footer>
+            </ion-card>
         </ion-grid></div></ion-content
   ></ion-page>
 </template>
@@ -54,11 +69,6 @@
 import { useRouter } from "vue-router";
 import { list, create, trash } from "ionicons/icons";
 import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonItem,
   IonLabel,
   IonButton,
   IonTitle,
@@ -67,18 +77,14 @@ import {
   IonGrid,
   IonContent,
   IonPage,
-  IonCardSubtitle,
+  IonItemDivider,
+  IonIcon,
 } from "@ionic/vue";
 
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonItem,
     IonLabel,
     IonButton,
     IonTitle,
@@ -87,7 +93,8 @@ export default {
     IonGrid,
     IonContent,
     IonPage,
-    IonCardSubtitle,
+    IonItemDivider,
+    IonIcon,
   },
   computed: {
     ...mapGetters("auth", {
@@ -107,6 +114,16 @@ export default {
     }),
     async showAdminDares() {
       await this.adminFetchDares();
+    },
+    statusColor(status) {
+      if (status === "new") {
+        return "light";
+      }
+      if (status === "completed") {
+        return "success";
+      } else {
+        return "primary";
+      }
     },
   },
   setup() {

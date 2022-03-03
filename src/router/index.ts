@@ -8,7 +8,7 @@ import GuestTabs from "../views/guest/GuestTabs.vue";
 import TabsPage from "../views/guest/GuestTabs.vue";
 import UserTabs from "../views/user/UserTabs.vue";
 import GameTabs from "../views/game/GameTabs.vue";
-import AdminTabs from "../views/admin/AdminTabs.vue"
+import AdminTabs from "../views/admin/AdminTabs.vue";
 import store from "../store/index";
 
 const routes: Array<RouteRecordRaw> = [
@@ -88,6 +88,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "settings",
         component: () => import("@/views/admin/AdminSettings.vue"),
+        meta: { requiredAuth: true },
+      },
+      {
+        path: "dare/view/:id",
+        component: () => import("@/views/admin/AdminDareView.vue"),
         meta: { requiredAuth: true },
       },
     ],
