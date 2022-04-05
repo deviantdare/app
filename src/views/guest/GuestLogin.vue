@@ -26,7 +26,7 @@
                   v-model="userInfo.password"
                 ></ion-input>
               </ion-item>
-              <ion-button expand="full" @click="login()">Login</ion-button>
+              <ion-button expand="full" @click="login()" type="submit">Login</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-grid>

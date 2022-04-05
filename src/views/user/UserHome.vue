@@ -3,11 +3,11 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="end">
-            {{ authData.displayname }}
-            <ion-avatar
-              ><img
-                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" /></ion-avatar
-          >
+          {{ authData.displayname }}
+          <ion-avatar
+            ><img
+              src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+          /></ion-avatar>
         </ion-buttons>
         <ion-title>User Home</ion-title>
       </ion-toolbar>
@@ -60,7 +60,7 @@
                   >{{ dare.status }}</ion-chip
                 >
                 <ion-chip outline v-else>{{ dare.status }}</ion-chip>
-                <ion-label v-if="dare.photos[0]"
+                <ion-label v-if="dare.photos"
                   ><img :src="dare.photos[0].webviewPath"
                 /></ion-label>
                 <ion-label v-else></ion-label>

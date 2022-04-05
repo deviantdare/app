@@ -8,47 +8,73 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">User Home</ion-title>
+          <ion-title size="large">Users Admin</ion-title>
         </ion-toolbar>
       </ion-header>
       <div id="container">
         <ion-grid fixed>
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>Welcome!</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-item>
-                <ion-label>Owner Name:</ion-label>
-                <ion-label>{{ authData.email }}</ion-label>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-          <ion-card>
-            <ion-card-header>
-              <ion-button expand="full" @click="showAdminDares()"
-                >Refresh</ion-button
+          <ion-button fill="clear" color="warning" @click="showAdminUsers()"
+            ><ion-icon :icon="refreshCircle"></ion-icon
+          ></ion-button>
+          <ion-card v-for="(user, index) in allAdminUsers" :key="index">
+            <ion-item-divider :color="statusColor(user.verified)">
+              <ion-label slot="start" v-if="user.displayname">{{
+                user.displayname.toUpperCase()
+              }}</ion-label>
+              <ion-label slot="start" v-else>{{
+                user.status.toUpperCase()
+              }}</ion-label>
+              <ion-button
+                slot="end"
+                color="light"
+                fill="clear"
+                @click="() => router.push('/admin/user/view/' + user._id)"
               >
-              <ion-card-subtitle>Here all your dares</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-item v-for="(dare, index) in allAdminDares" :key="index">
-                <ion-label>{{ dare }}</ion-label>
-              </ion-item>
-            </ion-card-content>
+                <ion-icon :icon="list"></ion-icon>
+              </ion-button>
+              <ion-button
+                slot="end"
+                color="light"
+                fill="clear"
+                @click="() => router.push('/admin/user/edit/' + user._id)"
+              >
+                <ion-icon :icon="create"></ion-icon>
+              </ion-button>
+              <ion-button
+                slot="end"
+                color="light"
+                fill="clear"
+                @click="() => presentAlertConfirm(user._id)"
+              >
+                <ion-icon :icon="trash"></ion-icon>
+              </ion-button>
+            </ion-item-divider>
+            <ion-item-divider>
+              <ion-col size="2">
+                <ion-label color="dark">Gender</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>{{ user.gender }} </ion-label>
+              </ion-col>
+            </ion-item-divider>
+            <ion-item-divider>
+              <ion-col size="2">
+                <ion-label color="dark">Email</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>{{ user.email }}</ion-label>
+              </ion-col>
+            </ion-item-divider>
           </ion-card>
         </ion-grid>
       </div></ion-content
     ></ion-page
   >
 </template>
-<script>
+<script type="ts">
+import { useRouter } from "vue-router";
+import { list, create, trash, refreshCircle } from "ionicons/icons";
 import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonItem,
   IonLabel,
   IonButton,
   IonTitle,
@@ -57,18 +83,17 @@ import {
   IonGrid,
   IonContent,
   IonPage,
-  IonCardSubtitle,
+  IonItemDivider,
+  IonIcon,
+  IonCard,
+  alertController,
+  IonCol,
 } from "@ionic/vue";
 
 import { mapGetters, mapActions } from "vuex";
-import { useRouter } from "vue-router";
+
 export default {
   components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonItem,
     IonLabel,
     IonButton,
     IonTitle,
@@ -77,44 +102,75 @@ export default {
     IonGrid,
     IonContent,
     IonPage,
-    IonCardSubtitle,
+    IonItemDivider,
+    IonIcon,
+    IonCard,
+    IonCol,
   },
   computed: {
     ...mapGetters("auth", {
       authData: "getAuthData",
     }),
-    ...mapGetters("admindares", {
-      allAdminDares: "getAllAdminDares",
+    ...mapGetters("adminusers", {
+      allAdminUsers: "getAllAdminUsers",
     }),
   },
   created() {
-    this.showAdminDares();
+    this.showAdminUsers();
   },
   methods: {
-    ...mapActions("admindares", {
-      adminFetchDares: "adminFetchDares",
+    ...mapActions("adminusers", {
+      adminFetchUsers: "adminFetchUsers",
+      adminDeleteUser: "adminDeleteUser",
     }),
-    async showAdminDares() {
-      await this.adminFetchDares();
+    async showAdminUsers() {
+      await this.adminFetchUsers();
     },
-    setup() {
-      const router = useRouter();
-      return { router };
+    statusColor(status) {
+      if (status === true) {
+        return "success";
+      } else {
+        return "primary";
+      }
     },
+    async presentAlertConfirm(userId) {
+      const alert = await alertController.create({
+        cssClass: "my-custom-class",
+        header: "Please confirm!",
+        message: `Delete ${userId}?`,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            id: "cancel-button",
+          },
+          {
+            text: "Okay",
+            id: "confirm-button",
+            handler: () => {
+              this.adminDeleteUser(userId);
+            },
+          },
+        ],
+      });
+      return alert.present();
+    },
+  },
+  setup() {
+    const router = useRouter();
+    return {
+      router,
+      list,
+      create,
+      trash,
+      refreshCircle,
+    };
   },
 };
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 #container strong {
   font-size: 20px;
   line-height: 26px;

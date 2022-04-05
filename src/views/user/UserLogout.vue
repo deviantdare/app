@@ -17,7 +17,7 @@
  <script>
 import { useRouter } from "vue-router";
 import { IonButton, IonPage } from "@ionic/vue";
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "ExploreContainer",
@@ -28,14 +28,20 @@ export default {
     IonButton,
     IonPage,
   },
-  computed: {
-    ...mapGetters("dare", {
-      getDareState: "getDareState",
+  methods: {
+    ...mapActions("auth", {
+      logoutUser: "logoutUser",
     }),
+    async logout() {
+      await this.logoutUser();
+    },
   },
   setup() {
     const router = useRouter();
     return { router };
+  },
+  created() {
+    this.logout();
   },
 };
 </script>

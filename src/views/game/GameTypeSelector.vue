@@ -75,7 +75,7 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonCard
+  IonCard,
 } from "@ionic/vue";
 import { warning, wifi } from "ionicons/icons";
 import { defineComponent } from "vue";
@@ -96,7 +96,7 @@ export default defineComponent({
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonCard
+    IonCard,
   },
   setup() {
     return { warning, wifi };
@@ -107,11 +107,6 @@ export default defineComponent({
 <style scoped>
 #container {
   text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 #container strong {

@@ -35,7 +35,7 @@ const actions = {
   async adminDeleteUser({ commit }: { commit: Commit }, payload: any) {
     const response = await jwtInterceptor.post(
       "http://localhost:3000/admin/user/delete",
-      payload
+      { id: payload }
     );
     commit("saveAllAdminUsers", response.data);
   },

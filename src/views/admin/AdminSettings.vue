@@ -2,53 +2,62 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Global Settings</ion-title>
+        <ion-title>Server Settings</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">User Home</ion-title>
+          <ion-title size="large">Users Admin</ion-title>
         </ion-toolbar>
       </ion-header>
       <div id="container">
         <ion-grid fixed>
           <ion-card>
-            <ion-card-header>
-              <ion-card-title>Welcome!</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-item>
-                <ion-label>Owner Name:</ion-label>
-                <ion-label>{{ authData.email }}</ion-label>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-          <ion-card>
-            <ion-card-header>
-              <ion-button expand="full" @click="showAdminDares()"
-                >Refresh</ion-button
+            <ion-item-divider color="dark">
+              <ion-label slot="start">Server Settings</ion-label>
+              <ion-button
+                fill="clear"
+                color="light"
+                slot="end"
+                @click="showAdminUsers()"
+                ><ion-icon :icon="refreshCircle"></ion-icon
+              ></ion-button>
+              <ion-button
+                slot="end"
+                color="light"
+                fill="clear"
+                @click="() => router.push('/admin/settings/edit')"
               >
-              <ion-card-subtitle>Here all your dares</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-item v-for="(dare, index) in allAdminDares" :key="index">
-                <ion-label>{{ dare }}</ion-label>
-              </ion-item>
-            </ion-card-content>
+                <ion-icon :icon="create"></ion-icon>
+              </ion-button>
+            </ion-item-divider>
+            <ion-item-divider>
+              <ion-col size="2">
+                <ion-label color="dark">Gender</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>A </ion-label>
+              </ion-col>
+            </ion-item-divider>
+            <ion-item-divider>
+              <ion-col size="2">
+                <ion-label color="dark">Email</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>B</ion-label>
+              </ion-col>
+            </ion-item-divider>
           </ion-card>
         </ion-grid>
       </div></ion-content
     ></ion-page
   >
 </template>
-<script>
+<script type="ts">
+import { useRouter } from "vue-router";
+import { list, create, trash, refreshCircle } from "ionicons/icons";
 import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonItem,
   IonLabel,
   IonButton,
   IonTitle,
@@ -57,18 +66,15 @@ import {
   IonGrid,
   IonContent,
   IonPage,
-  IonCardSubtitle,
+  IonItemDivider,
+  IonIcon,
+  IonCard,
 } from "@ionic/vue";
 
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonItem,
     IonLabel,
     IonButton,
     IonTitle,
@@ -77,40 +83,50 @@ export default {
     IonGrid,
     IonContent,
     IonPage,
-    IonCardSubtitle,
+    IonItemDivider,
+    IonIcon,
+    IonCard,
   },
   computed: {
     ...mapGetters("auth", {
       authData: "getAuthData",
     }),
-    ...mapGetters("admindares", {
-      allAdminDares: "getAllAdminDares",
+    ...mapGetters("adminserver", {
+      getServerSettings: "getServerSettings",
     }),
   },
   created() {
-    this.showAdminDares();
+    this.showServerSettings();
   },
   methods: {
-    ...mapActions("admindares", {
-      adminFetchDares: "adminFetchDares",
+    ...mapActions("adminserver", {
+      adminFetchServer: "adminFetchServer",
     }),
-    async showAdminDares() {
-      await this.adminFetchDares();
+    async showServerSettings() {
+      await this.adminFetchServer();
     },
+    statusColor(status) {
+      if (status === true) {
+        return "success";
+      } else {
+        return "tertiary";
+      }
+    },
+  },
+  setup() {
+    const router = useRouter();
+    return {
+      router,
+      list,
+      create,
+      trash,
+      refreshCircle,
+    };
   },
 };
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 #container strong {
   font-size: 20px;
   line-height: 26px;

@@ -106,7 +106,7 @@
             ></ion-item>
           </ion-card-content>
           <ion-card-content>
-            <ion-button expand="full" color="primary" @click="register()"
+            <ion-button type="submit" expand="full" color="primary" @click="register()"
               >Register</ion-button
             >
           </ion-card-content>

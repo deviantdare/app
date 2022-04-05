@@ -15,7 +15,7 @@
             <ion-col>
               <ion-card>
                 <ion-card-header align="center">
-                  <ion-card-title color="primary">Titillating</ion-card-title>
+                  <ion-card-title color="primary">TITILLATING</ion-card-title>
                 </ion-card-header>
                 <ion-card-content
                   ><p align="center">
@@ -30,7 +30,7 @@
             <ion-col>
               <ion-card>
                 <ion-card-header align="center">
-                  <ion-card-title color="primary">Arousing</ion-card-title>
+                  <ion-card-title color="primary">AROUSING</ion-card-title>
                 </ion-card-header>
                 <ion-card-content
                   ><p align="center">
@@ -44,7 +44,7 @@
             <ion-col>
               <ion-card>
                 <ion-card-header align="center">
-                  <ion-card-title color="primary">Explicit</ion-card-title>
+                  <ion-card-title color="primary">EXPLICIT</ion-card-title>
                 </ion-card-header>
                 <ion-card-content
                   ><p align="center">
@@ -61,7 +61,7 @@
             <ion-col>
               <ion-card>
                 <ion-card-header align="center">
-                  <ion-card-title color="primary">Edgy</ion-card-title>
+                  <ion-card-title color="primary">EDGY</ion-card-title>
                 </ion-card-header>
                 <ion-card-content
                   ><p align="center">Pushing soft boundaries is ok.</p>
@@ -77,7 +77,7 @@
             <ion-col>
               <ion-card>
                 <ion-card-header align="center">
-                  <ion-card-title color="primary">Hardcore</ion-card-title>
+                  <ion-card-title color="primary">HARDCORE</ion-card-title>
                 </ion-card-header>
                 <ion-card-content
                   ><p align="center">No holds barred.</p>
